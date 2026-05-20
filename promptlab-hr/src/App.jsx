@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from '@/components/Layout';
+import ScrollToTop from '@/components/ScrollToTop';
 import Welcome from '@/pages/Welcome';
 import Purpose from '@/pages/Purpose';
 import Learning from '@/pages/Learning';
@@ -13,6 +14,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Welcome />} />

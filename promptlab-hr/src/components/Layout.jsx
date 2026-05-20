@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, Outlet, Link } from 'react-router-dom';
+import { NavLink, Outlet, Link, useLocation } from 'react-router-dom';
 import {
   BarChart3,
   BookOpen,
@@ -34,11 +34,19 @@ export default function Layout() {
   const [collapsed, setCollapsed] = useState(false);
   const { user, logOut } = useAuth();
   const online = useOnlineStatus();
+  const { pathname } = useLocation();
   const goHome = () => {
     setOpen(false);
-    window.requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    });
+  };
+  const handleNavClick = (event, path) => {
+    setOpen(false);
+
+    if (path === pathname) {
+      event.preventDefault();
+      window.requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      });
+    }
   };
 
   return (
@@ -87,7 +95,7 @@ export default function Layout() {
                 key={item.id}
                 to={item.path}
                 end={item.path === '/'}
-                onClick={() => setOpen(false)}
+                onClick={(event) => handleNavClick(event, item.path)}
                 title={item.label}
                 className={({ isActive }) =>
                   `group flex items-center rounded-xl py-3 text-sm transition-all ${
