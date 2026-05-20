@@ -48,6 +48,13 @@ export default function Learning() {
   const markLearningTab  = useProgressStore((s) => s.markLearningTab);
   const learningQuizPassed = useProgressStore((s) => s.learningQuizPassed);
   const markQuizPassed   = useProgressStore((s) => s.markQuizPassed);
+  const columns = lessons[tab].reduce(
+    (groups, lesson, i) => {
+      groups[i % 2].push({ lesson, index: i + 1 });
+      return groups;
+    },
+    [[], []]
+  );
 
   useEffect(() => { markLearningTab('when'); }, [markLearningTab]);
 
@@ -82,9 +89,13 @@ export default function Learning() {
       </div>
 
       {/* Q&A */}
-      <div className="grid gap-4 lg:grid-cols-2">
-        {lessons[tab].map((lesson, i) => (
-          <QACard key={i} lesson={lesson} index={i + 1} />
+      <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
+        {columns.map((column, columnIndex) => (
+          <div key={`${tab}-column-${columnIndex}`} className="flex flex-col gap-4">
+            {column.map(({ lesson, index }) => (
+              <QACard key={`${tab}-${lesson.question}`} lesson={lesson} index={index} />
+            ))}
+          </div>
         ))}
       </div>
 

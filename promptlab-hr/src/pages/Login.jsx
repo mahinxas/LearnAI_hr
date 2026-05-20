@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { useOnlineStatus } from '@/lib/capabilities';
 import { ArrowRight, BookOpen, Shield, BarChart2 } from 'lucide-react';
 
 export default function Login() {
   const { signIn, signUp, signInGoogle, user } = useAuth();
+  const online = useOnlineStatus();
   const navigate = useNavigate();
   const [mode, setMode] = useState('signin'); // 'signin' | 'signup'
   const [form, setForm] = useState({ email: '', password: '', displayName: '' });
@@ -14,6 +16,24 @@ export default function Login() {
   if (user) {
     navigate('/', { replace: true });
     return null;
+  }
+
+  if (!online) {
+    return (
+      <div className="grid min-h-[calc(100vh-120px)] place-items-center px-6 py-12">
+        <div className="w-full max-w-md rounded-lg border border-midnight-100 bg-white p-8 shadow-soft">
+          <p className="eyebrow mb-3">Offline mode</p>
+          <h1 className="display-md mb-4">Sign in is unavailable offline.</h1>
+          <p className="text-sm leading-6 text-midnight-600">
+            Learning content and the prompt builder can still be used. Account sign-in
+            needs an internet connection.
+          </p>
+          <Link to="/" className="btn-primary mt-6 !inline-flex">
+            Back to app
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   const submit = async (e) => {
