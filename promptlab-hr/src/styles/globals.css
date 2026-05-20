@@ -10,6 +10,11 @@
     background-color: #fdfaf3;
     color: #0a1322;
     font-feature-settings: "ss01", "cv11";
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .dark body {
+    background-color: #0a1322;
+    color: #faf3e3;
   }
   ::selection {
     background: #ff6f4a;
@@ -23,53 +28,53 @@
   }
 
   .display-xl {
-    @apply font-display font-light tracking-tightest text-midnight-950;
+    @apply font-display font-light tracking-tightest text-midnight-950 dark:text-parchment-50;
     font-size: clamp(2.75rem, 6vw, 5.25rem);
     line-height: 0.95;
   }
 
   .display-lg {
-    @apply font-display font-light tracking-tightest text-midnight-950;
+    @apply font-display font-light tracking-tightest text-midnight-950 dark:text-parchment-50;
     font-size: clamp(2rem, 4vw, 3.5rem);
     line-height: 1;
   }
 
   .display-md {
-    @apply font-display font-normal tracking-tight text-midnight-950;
+    @apply font-display font-normal tracking-tight text-midnight-950 dark:text-parchment-50;
     font-size: clamp(1.5rem, 2.4vw, 2.25rem);
     line-height: 1.1;
   }
 
   .eyebrow {
-    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-midnight-500;
+    @apply font-mono text-[12px] uppercase tracking-[0.18em] text-midnight-600 dark:text-midnight-300;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-midnight-950 px-6 py-3 font-medium text-parchment-50 shadow-soft transition-all duration-200 hover:bg-coral-500 hover:-translate-y-px;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-midnight-950 px-6 py-3 font-medium text-parchment-50 shadow-soft transition-all duration-200 hover:bg-coral-500 hover:-translate-y-px dark:bg-parchment-50 dark:text-midnight-950 dark:hover:bg-coral-500 dark:hover:text-parchment-50;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-midnight-200 bg-transparent px-6 py-3 font-medium text-midnight-950 transition-all duration-200 hover:border-midnight-950 hover:bg-midnight-950 hover:text-parchment-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-midnight-200 bg-transparent px-6 py-3 font-medium text-midnight-950 transition-all duration-200 hover:border-midnight-950 hover:bg-midnight-950 hover:text-parchment-50 dark:border-midnight-600 dark:text-parchment-200 dark:hover:border-midnight-400 dark:hover:bg-midnight-700 dark:hover:text-parchment-50;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-midnight-600 transition-colors hover:text-midnight-950;
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-midnight-600 transition-colors hover:text-midnight-950 dark:text-parchment-400 dark:hover:text-parchment-50;
   }
 
   .card {
-    @apply rounded-2xl border border-midnight-100 bg-white p-6 shadow-soft;
+    @apply rounded-2xl border border-midnight-100 bg-white p-6 shadow-soft dark:bg-midnight-800 dark:border-midnight-700;
   }
 
   .chip {
-    @apply inline-flex cursor-pointer items-center gap-2 rounded-full border border-midnight-200 bg-white px-3.5 py-1.5 text-sm text-midnight-700 transition-all hover:border-midnight-950;
+    @apply inline-flex cursor-pointer items-center gap-2 rounded-full border border-midnight-200 bg-white px-3.5 py-1.5 text-sm text-midnight-700 transition-all hover:border-midnight-950 dark:bg-midnight-800 dark:border-midnight-600 dark:text-parchment-200 dark:hover:border-parchment-200;
   }
 
   .chip-active {
-    @apply border-midnight-950 bg-midnight-950 text-parchment-50;
+    @apply border-midnight-950 bg-midnight-950 text-parchment-50 dark:border-parchment-200 dark:bg-parchment-100 dark:text-midnight-950;
   }
 
   .input-base {
-    @apply w-full rounded-xl border border-midnight-200 bg-parchment-50/40 px-4 py-3 text-midnight-950 placeholder:text-midnight-400 focus:border-midnight-950 focus:bg-white focus:outline-none focus:ring-2 focus:ring-midnight-950/10 transition;
+    @apply w-full rounded-xl border border-midnight-200 bg-parchment-50/40 px-4 py-3 text-midnight-950 placeholder:text-midnight-400 focus:border-midnight-950 focus:bg-white focus:outline-none focus:ring-2 focus:ring-midnight-950/10 transition dark:bg-midnight-800 dark:border-midnight-600 dark:text-parchment-100 dark:placeholder:text-midnight-500 dark:focus:border-midnight-400 dark:focus:bg-midnight-700;
   }
 
   .grain {
@@ -97,4 +102,25 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #8fa3c0;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #1d2c46;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #293c5d;
+}
+
+@keyframes lairnBounce {
+  0%, 80%, 100% { transform: translateY(0); }
+  40%           { transform: translateY(-5px); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/features/auth/AuthProvider';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen, Shield, BarChart2 } from 'lucide-react';
 
 export default function Login() {
   const { signIn, signUp, signInGoogle, user } = useAuth();
@@ -54,11 +54,32 @@ export default function Login() {
           ← Back to LeAIrn HR
         </Link>
 
+        {mode === 'signup' && (
+          <div className="mb-6 grid grid-cols-3 gap-3">
+            {[
+              { icon: BookOpen, label: 'Learn', desc: '6 structured modules on conscious AI use in HR' },
+              { icon: Shield,   label: 'Stay safe', desc: 'Built-in bias guardrails and verification checklists' },
+              { icon: BarChart2, label: 'Track progress', desc: 'Sync your learning progress across devices' },
+            ].map(({ icon: Icon, label, desc }) => (
+              <div key={label} className="rounded-2xl border border-midnight-100 bg-parchment-50/60 p-3 text-center">
+                <Icon size={18} className="mx-auto mb-1.5 text-coral-500" />
+                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-midnight-700">{label}</p>
+                <p className="mt-1 text-[11px] leading-snug text-midnight-500">{desc}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="rounded-3xl border border-midnight-100 bg-white p-8 shadow-soft">
-          <p className="eyebrow mb-3">{mode === 'signin' ? 'Welcome back' : 'Create an account'}</p>
-          <h1 className="display-md mb-6">
-            {mode === 'signin' ? 'Sign in to continue' : 'Start learning'}
+          <p className="eyebrow mb-3">{mode === 'signin' ? 'Welcome back' : 'Create a free account'}</p>
+          <h1 className="display-md mb-2">
+            {mode === 'signin' ? 'Sign in to continue' : 'Start learning for free'}
           </h1>
+          {mode === 'signin' && (
+            <p className="mb-5 text-sm text-midnight-500">
+              Your prompt builder, safety checklist, and progress are waiting.
+            </p>
+          )}
 
           <form onSubmit={submit} className="space-y-4">
             {mode === 'signup' && (
