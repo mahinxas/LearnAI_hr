@@ -168,4 +168,4 @@ All original content is preserved verbatim — the lesson copy, builder lessons,
 
 ## License
 
-Educational use only. Not a substitute for human hiring decisions.
+Educational use only.
