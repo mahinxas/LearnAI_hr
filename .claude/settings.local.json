@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls ~/Documents/ | grep -i \"HR\")",
+      "Read(//Users/md.mazharulislam/Documents/**)",
+      "Bash(npm run *)",
+      "Bash(npx vite *)",
+      "Bash(npm install *)"
+    ]
+  }
+}

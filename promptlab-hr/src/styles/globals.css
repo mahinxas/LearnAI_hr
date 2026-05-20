@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #fdfaf3;
+    color: #0a1322;
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    background: #ff6f4a;
+    color: #fdfaf3;
+  }
+}
+
+@layer components {
+  .container-edge {
+    @apply mx-auto w-full max-w-[1440px] px-6 md:px-10 lg:px-14;
+  }
+
+  .display-xl {
+    @apply font-display font-light tracking-tightest text-midnight-950;
+    font-size: clamp(2.75rem, 6vw, 5.25rem);
+    line-height: 0.95;
+  }
+
+  .display-lg {
+    @apply font-display font-light tracking-tightest text-midnight-950;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1;
+  }
+
+  .display-md {
+    @apply font-display font-normal tracking-tight text-midnight-950;
+    font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+    line-height: 1.1;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-midnight-500;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-midnight-950 px-6 py-3 font-medium text-parchment-50 shadow-soft transition-all duration-200 hover:bg-coral-500 hover:-translate-y-px;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-midnight-200 bg-transparent px-6 py-3 font-medium text-midnight-950 transition-all duration-200 hover:border-midnight-950 hover:bg-midnight-950 hover:text-parchment-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-midnight-600 transition-colors hover:text-midnight-950;
+  }
+
+  .card {
+    @apply rounded-2xl border border-midnight-100 bg-white p-6 shadow-soft;
+  }
+
+  .chip {
+    @apply inline-flex cursor-pointer items-center gap-2 rounded-full border border-midnight-200 bg-white px-3.5 py-1.5 text-sm text-midnight-700 transition-all hover:border-midnight-950;
+  }
+
+  .chip-active {
+    @apply border-midnight-950 bg-midnight-950 text-parchment-50;
+  }
+
+  .input-base {
+    @apply w-full rounded-xl border border-midnight-200 bg-parchment-50/40 px-4 py-3 text-midnight-950 placeholder:text-midnight-400 focus:border-midnight-950 focus:bg-white focus:outline-none focus:ring-2 focus:ring-midnight-950/10 transition;
+  }
+
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: theme('backgroundImage.grain');
+    opacity: 0.04;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+  }
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #c4d0e2;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8fa3c0;
+}
