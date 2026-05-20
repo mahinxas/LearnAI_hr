@@ -4,6 +4,14 @@ import { welcomeCards } from '@/data/content';
 import { Card, RevealCard, Tag } from '@/components/ui';
 
 export default function Welcome() {
+  const cardColumns = welcomeCards.reduce(
+    (groups, card, i) => {
+      groups[i % 2].push({ card, index: i + 1 });
+      return groups;
+    },
+    [[], []]
+  );
+
   return (
     <div className="px-6 py-12 md:px-10 lg:px-14">
       {/* Hero */}
@@ -105,21 +113,25 @@ export default function Welcome() {
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2">
-          {welcomeCards.map((card, i) => (
-            <Card key={card.title} className="!p-7 hover:shadow-lift transition-shadow">
-              <div className="mb-4 flex items-center justify-between">
-                <Tag tone="coral">{card.label}</Tag>
-                <span className="font-mono text-xs text-midnight-400">
-                  {String(i + 1).padStart(2, '0')} / 04
-                </span>
-              </div>
-              <h3 className="mb-3 font-display text-2xl text-midnight-950">
-                {card.title}
-              </h3>
-              <p className="text-midnight-600">{card.visible}</p>
-              <RevealCard>{card.hidden}</RevealCard>
-            </Card>
+        <div className="grid gap-5 md:grid-cols-2 md:items-start">
+          {cardColumns.map((column, columnIndex) => (
+            <div key={`welcome-column-${columnIndex}`} className="flex flex-col gap-5">
+              {column.map(({ card, index }) => (
+                <Card key={card.title} className="!p-7 hover:shadow-lift transition-shadow">
+                  <div className="mb-4 flex items-center justify-between">
+                    <Tag tone="coral">{card.label}</Tag>
+                    <span className="font-mono text-xs text-midnight-400">
+                      {String(index).padStart(2, '0')} / 04
+                    </span>
+                  </div>
+                  <h3 className="mb-3 font-display text-2xl text-midnight-950">
+                    {card.title}
+                  </h3>
+                  <p className="text-midnight-600">{card.visible}</p>
+                  <RevealCard>{card.hidden}</RevealCard>
+                </Card>
+              ))}
+            </div>
           ))}
         </div>
       </section>
