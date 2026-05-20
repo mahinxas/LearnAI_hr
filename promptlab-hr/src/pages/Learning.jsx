@@ -11,6 +11,13 @@ const TABS = [
 
 export default function Learning() {
   const [tab, setTab] = useState('when');
+  const columns = lessons[tab].reduce(
+    (groups, lesson, i) => {
+      groups[i % 2].push({ lesson, index: i + 1 });
+      return groups;
+    },
+    [[], []]
+  );
 
   return (
     <div className="px-6 py-12 md:px-10 lg:px-14">
@@ -38,9 +45,13 @@ export default function Learning() {
       </div>
 
       {/* Q&A */}
-      <div className="grid gap-4 lg:grid-cols-2">
-        {lessons[tab].map((lesson, i) => (
-          <QACard key={i} lesson={lesson} index={i + 1} />
+      <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
+        {columns.map((column, columnIndex) => (
+          <div key={`${tab}-column-${columnIndex}`} className="flex flex-col gap-4">
+            {column.map(({ lesson, index }) => (
+              <QACard key={`${tab}-${lesson.question}`} lesson={lesson} index={index} />
+            ))}
+          </div>
         ))}
       </div>
 
