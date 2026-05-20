@@ -1,0 +1,22 @@
+import { useLayoutEffect } from 'react';
+import { useLocation, useNavigationType } from 'react-router-dom';
+
+export default function ScrollToTop() {
+  const { hash, pathname } = useLocation();
+  const navigationType = useNavigationType();
+
+  useLayoutEffect(() => {
+    if (hash || navigationType === 'POP') {
+      return;
+    }
+
+    const root = document.documentElement;
+    const previousScrollBehavior = root.style.scrollBehavior;
+
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    root.style.scrollBehavior = previousScrollBehavior;
+  }, [hash, navigationType, pathname]);
+
+  return null;
+}
