@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'learnai-hr-v1.0.0';
+const CACHE_VERSION = 'learnai-hr-v1.0.1';
 const APP_CACHE = `${CACHE_VERSION}-app`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -72,6 +72,8 @@ async function networkFirstNavigation(request) {
     return response;
   } catch {
     return (
+      (await caches.match(request)) ||
+      (await caches.match('/')) ||
       (await caches.match('/index.html')) ||
       (await caches.match('/offline.html'))
     );
@@ -95,7 +97,7 @@ async function cacheFirst(request) {
 
     return response;
   } catch {
-    return caches.match('/offline.html');
+    return new Response('', { status: 504, statusText: 'Offline' });
   }
 }
 
