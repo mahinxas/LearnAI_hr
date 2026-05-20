@@ -165,7 +165,7 @@ export default function Layout() {
               </button>
 
               <Link to="/" className="shrink-0" aria-label="LeAIrn HR home" onClick={goHome}>
-                <Logo size="sm" />
+                <Logo size="sm" iconOnly />
               </Link>
 
               <span className="hidden h-1 w-1 shrink-0 rounded-full bg-midnight-300 md:block" />
