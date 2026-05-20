@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   tasks, criteria, formats, lengths,
   safetyRules, reviewInstructions, builderLessons,
@@ -17,12 +18,25 @@ import { AlertTriangle, MessageSquare, RotateCcw, Lightbulb, BarChart2, X } from
 
 export default function Builder() {
   const state = useBuilderStore();
+  const { hash } = useLocation();
   const prompt = useMemo(() => buildPromptText(state), [state]);
   const { score, checks } = useMemo(() => computeReadinessScore(state), [state]);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
 
   const set = (field) => (e) => state.setField(field, e.target.value);
+
+  useEffect(() => {
+    if (hash !== '#candidate-information') return;
+
+    const timer = window.setTimeout(() => {
+      document
+        .getElementById('candidate-information')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+
+    return () => window.clearTimeout(timer);
+  }, [hash]);
 
   const handleReset = () => {
     if (resetConfirm) {
@@ -87,7 +101,7 @@ export default function Builder() {
         </button>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-12">
+      <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
         {/* Form column */}
         <form className="flex flex-col gap-5 lg:col-span-7" onSubmit={(e) => e.preventDefault()}>
 
@@ -139,7 +153,12 @@ export default function Builder() {
           </BuilderStep>
 
           {/* Step 3: Candidate info */}
-          <BuilderStep number="3" title="Add candidate information" lesson={builderLessons[2]}>
+          <BuilderStep
+            id="candidate-information"
+            number="3"
+            title="Add candidate information"
+            lesson={builderLessons[2]}
+          >
             <div className="space-y-4">
 
               {/* AI Chat callout */}
@@ -272,8 +291,8 @@ export default function Builder() {
         </form>
 
         {/* Output sidebar — desktop only */}
-        <aside className="hidden lg:block lg:col-span-5">
-          <div className="sticky top-24 flex flex-col gap-5">
+        <aside className="scrollbar-thin hidden lg:sticky lg:top-24 lg:col-span-5 lg:block lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto lg:pl-1 lg:pb-6">
+          <div className="flex flex-col gap-5">
             <OutputContent />
           </div>
         </aside>

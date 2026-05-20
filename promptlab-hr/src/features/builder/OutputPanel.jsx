@@ -134,6 +134,7 @@ export function FinalPrompt({ prompt }) {
   const [fileLoading,  setFileLoading]  = useState(false);
   const [cvLoaded,     setCvLoaded]     = useState(false);
   const messagesEndRef                  = useRef(null);
+  const messagesContainerRef            = useRef(null);
   const inputRef                        = useRef(null);
   const fileInputRef                    = useRef(null);
 
@@ -332,7 +333,9 @@ End EVERY response with exactly one of these tags on its own line — no excepti
   }, [attachedFile]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const container = messagesContainerRef.current;
+    if (!container) return;
+    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
   }, [messages, aiLoading]);
 
   useEffect(() => {
@@ -376,7 +379,7 @@ End EVERY response with exactly one of these tags on its own line — no excepti
         </div>
       </div>
 
-      <pre className="max-h-[320px] overflow-auto whitespace-pre-wrap px-5 py-4 font-mono text-[12.5px] leading-relaxed text-parchment-100">
+      <pre className="scrollbar-thin max-h-[320px] overflow-auto whitespace-pre-wrap px-5 py-4 font-mono text-[12.5px] leading-relaxed text-parchment-100">
         {prompt}
       </pre>
 
@@ -473,7 +476,11 @@ End EVERY response with exactly one of these tags on its own line — no excepti
             </div>
           )}
 
-          <div className="flex flex-col gap-3 overflow-y-auto px-5 py-2" style={{ maxHeight: '256px' }}>
+          <div
+            ref={messagesContainerRef}
+            className="scrollbar-thin flex flex-col gap-3 overflow-y-auto px-5 py-2"
+            style={{ maxHeight: '256px' }}
+          >
             {messages.length === 0 && (
               <p className="py-6 text-center font-mono text-[11px] text-midnight-400">
                 Your built prompt is loaded.

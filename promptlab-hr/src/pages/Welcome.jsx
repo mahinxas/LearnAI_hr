@@ -8,7 +8,7 @@ import { useProgressStore } from '@/features/progress/progressStore';
 const ONBOARDING_PATH = [
   { step: '01', label: 'Purpose',     path: '/purpose',  desc: 'Understand what AI can and cannot do in recruitment.' },
   { step: '02', label: 'AI in HR',    path: '/learning', desc: 'Learn the vocabulary of prompts, criteria, and safety.' },
-  { step: '03', label: 'Builder',     path: '/builder',  desc: 'Build your first structured recruitment prompt.' },
+  { step: '03', label: 'Builder',     path: '/builder#candidate-information',  desc: 'Build your first structured recruitment prompt.' },
   { step: '04', label: 'Safety',      path: '/safety',   desc: 'Confirm the 9 safety rules before using any AI output.' },
   { step: '05', label: 'Progress',    path: '/progress', desc: 'Track your learning and collect your certificate.' },
 ];
@@ -56,7 +56,7 @@ export default function Welcome() {
                 <BookOpen size={16} />
                 Start the learning path
               </Link>
-              <Link to="/builder" className="btn-secondary">
+              <Link to="/builder#candidate-information" className="btn-secondary">
                 Try the prompt builder <ArrowUpRight size={16} />
               </Link>
               <Link to="/safety" className="btn-ghost text-midnight-500 dark:text-midnight-400 underline-offset-4 hover:underline">

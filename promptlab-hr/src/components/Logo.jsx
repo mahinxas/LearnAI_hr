@@ -1,7 +1,7 @@
 export default function Logo({ dark = false, size = 'md', iconOnly = false }) {
   const textSize = { sm: 'text-lg', md: 'text-2xl', lg: 'text-3xl' }[size];
   const iconSize = { sm: 34, md: 44, lg: 54 }[size];
-  const neutral = dark ? 'text-parchment-50' : 'text-midnight-950';
+  const neutral = dark ? 'text-parchment-50' : 'text-midnight-950 dark:text-parchment-50';
 
   if (iconOnly) {
     return (

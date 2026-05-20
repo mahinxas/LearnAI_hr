@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-export function BuilderStep({ number, title, lesson, children }) {
+export function BuilderStep({ number, title, lesson, children, id }) {
   const [showLesson, setShowLesson] = useState(false);
 
   return (
-    <article className="rounded-2xl border border-midnight-100 bg-white p-6 shadow-soft transition-shadow hover:shadow-lift">
+    <article id={id} className="scroll-mt-24 rounded-2xl border border-midnight-100 bg-white p-6 shadow-soft transition-shadow hover:shadow-lift">
       <header className="mb-5 flex items-start gap-4">
         <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-midnight-950 font-mono text-sm text-parchment-50">
           {number}
