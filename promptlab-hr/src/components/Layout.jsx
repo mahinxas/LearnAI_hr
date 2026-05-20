@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { navItems } from '@/data/content';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { getRuntimeCapabilities, useOnlineStatus } from '@/lib/capabilities';
 import Logo from '@/components/Logo';
 
 const navIcons = {
@@ -32,6 +33,8 @@ export default function Layout() {
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const { user, logOut } = useAuth();
+  const online = useOnlineStatus();
+  const capabilities = getRuntimeCapabilities(online);
   const goHome = () => {
     setOpen(false);
     window.requestAnimationFrame(() => {
@@ -172,6 +175,11 @@ export default function Layout() {
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
+              {!capabilities.aiApi && (
+                <span className="hidden rounded-full border border-midnight-200 bg-white px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-midnight-500 md:inline-flex">
+                  {online ? 'Local mode' : 'Offline mode'}
+                </span>
+              )}
               {user ? (
                 <div className="flex items-center gap-2">
                   <div className="hidden items-center gap-2 rounded-full border border-midnight-200 bg-white px-3 py-1.5 text-sm sm:flex">
