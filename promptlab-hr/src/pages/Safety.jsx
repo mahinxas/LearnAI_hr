@@ -1,35 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Check } from 'lucide-react';
 import { safetyChecklist } from '@/data/content';
 import { PageHeader } from '@/components/ui';
 import { useAuth } from '@/features/auth/AuthProvider';
+import { useProgressStore } from '@/features/progress/progressStore';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 export default function Safety() {
   const { user } = useAuth();
-  const [checked, setChecked] = useState(() => {
-    const raw = localStorage.getItem('promptlab-safety-checks');
-    return raw ? JSON.parse(raw) : {};
-  });
+  const { safetyChecks, toggleSafetyCheck, setSafetyChecks } = useProgressStore();
 
-  // Sync to Firestore if signed in
+  // Sync from Firestore when user signs in
   useEffect(() => {
     if (!user) return;
     (async () => {
       try {
         const snap = await getDoc(doc(db, 'users', user.uid, 'progress', 'safety'));
-        if (snap.exists()) setChecked(snap.data().checks || {});
+        if (snap.exists()) setSafetyChecks(snap.data().checks || {});
       } catch (e) {
         console.warn('safety read skipped:', e.message);
       }
     })();
-  }, [user]);
+  }, [user, setSafetyChecks]);
 
   const toggle = async (i) => {
-    const next = { ...checked, [i]: !checked[i] };
-    setChecked(next);
-    localStorage.setItem('promptlab-safety-checks', JSON.stringify(next));
+    toggleSafetyCheck(i);
+    const next = { ...safetyChecks, [i]: !safetyChecks[i] };
     if (user) {
       try {
         await setDoc(doc(db, 'users', user.uid, 'progress', 'safety'), {
@@ -42,7 +39,7 @@ export default function Safety() {
     }
   };
 
-  const completedCount = Object.values(checked).filter(Boolean).length;
+  const completedCount = Object.values(safetyChecks).filter(Boolean).length;
   const pct = Math.round((completedCount / safetyChecklist.length) * 100);
 
   return (
@@ -73,7 +70,7 @@ export default function Safety() {
 
       <div className="grid gap-3 md:grid-cols-2">
         {safetyChecklist.map((item, i) => {
-          const isOn = !!checked[i];
+          const isOn = !!safetyChecks[i];
           return (
             <button
               key={i}
